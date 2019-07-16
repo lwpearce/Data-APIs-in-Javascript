@@ -10,13 +10,22 @@
         <img src="" id="rainbow" width="480" />
         <script>
             console.log('about to fetch a rainbow');
-            fetch('rainbow.jpg').then(response => {
-                console.log(response);
-                return response.blob();
-            }).then(blob => {
-            console.log(blob);
-            document.getElementById('rainbow').src = URL.createObjectURL(blob);
-        });
+
+            catchRainbow()                  // this function returns a promise,
+            .then(response => {             // so this then gets run after the promise is done
+                console.log('yay we got the promise back');
+            })     
+            .catch(error => {
+            console.log('error!');
+            console.error(error);
+            });
+            
+            // all of the following is asynchronous and it all is in one function to be called.
+            async function catchRainbow() {
+                const response = await fetch('rainbow.jpg');  // await and async go together
+                const blob = await response.blob();           // await and async go together
+                document.getElementById('rainbow').src = URL.createObjectURL(blob);
+            }       
         </script>
     </body>
 </html>
