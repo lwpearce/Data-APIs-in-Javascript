@@ -6,26 +6,33 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Coding Train: Data/APIs 1</title>
     </head>
-    <body>
-        <img src="" id="rainbow" width="480" />
+    <body>       
+        <h1>Fetching </h1>
         <script>
-            console.log('about to fetch a rainbow');
-
-            catchRainbow()                  // this function returns a promise,
+            console.log('about to fetch some files');
+            const pics = ['rainbow.jpg','frog.jpg','tree.jpg'];
+            catchPics(pics)                  // this function returns a promise,
             .then(response => {             // so this then gets run after the promise is done
                 console.log('yay we got the promise back');
             })     
             .catch(error => {
             console.log('error!');
             console.error(error);
-            });
+            });           
             
             // all of the following is asynchronous and it all is in one function to be called.
-            async function catchRainbow() {
-                const response = await fetch('rainbow.jpg');  // await and async go together
-                const blob = await response.blob();           // await and async go together
-                document.getElementById('rainbow').src = URL.createObjectURL(blob);
+            async function catchPics(filenames) {
+                
+                for (let filename of filenames) {
+                    const response = await fetch(filename);     // await and async go together
+                    const blob = await response.blob();   
+                    const img = document.createElement('img');       // await and async go together
+                    img.src = URL.createObjectURL(blob);
+                    img.width = '200';
+                    document.body.append(img);
+                }
             }       
+            
         </script>
     </body>
 </html>
